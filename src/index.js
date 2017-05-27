@@ -9,6 +9,7 @@
  * @return {Window}
  */
 function createWindow(name, width, height) {
+  return window.open('', name, `width=${width},height=${height}`);
 }
 
 /**
@@ -17,6 +18,7 @@ function createWindow(name, width, height) {
  * @param {Window} window - окно, размер которого надо изменить
  */
 function closeWindow(window) {
+  window.close();
 }
 
 /**

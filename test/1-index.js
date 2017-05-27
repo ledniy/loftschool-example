@@ -20,6 +20,7 @@ describe('ДЗ 7.1 - BOM', () => {
         it('должна возвращать окно', () => {
             newWindow = createWindow('test-window-1', 200, 100);
             assert.equal(newWindow.constructor.name, 'Window');
+            console.log(newWindow.innerHeight);
         });
 
         after(() => {
