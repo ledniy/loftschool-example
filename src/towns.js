@@ -35,8 +35,7 @@ let homeworkContainer = document.querySelector('#homework-container');
  *
  * @return {Promise<Array<{name: string}>>}
  */
-function loadTowns() {
-}
+const loadTowns = require('./index.js').loadAndSortTowns;
 
 /**
  * Функция должна проверять встречается ли подстрока chunk в строке full
@@ -52,15 +51,49 @@ function loadTowns() {
  * @return {boolean}
  */
 function isMatching(full, chunk) {
+    return full.toLowerCase().includes(chunk.toLowerCase());
 }
 
 let loadingBlock = homeworkContainer.querySelector('#loading-block');
 let filterBlock = homeworkContainer.querySelector('#filter-block');
 let filterInput = homeworkContainer.querySelector('#filter-input');
 let filterResult = homeworkContainer.querySelector('#filter-result');
-let townsPromise;
+let cities = [];
+const load = (url) => loadTowns(url)
+  .then(res => {
+      cities = res
+      loadingBlock.style.display = 'none';
+      filterBlock.style.display = 'block';
+  })
+  .catch(() => {
+      let error = document.createElement('div');
+
+      loadingBlock.style.display = 'none';
+      error.setAttribute('id', 'error');
+      error.innerHTML = `
+        <div>Не удалось загрузить города</div>
+        <button>Повторить</button>
+      `
+
+      error.querySelector('button').addEventListener('click', e => {
+          e.preventDefault();
+          homeworkContainer.removeChild(error);
+          loadingBlock.style.display = 'block';
+          load();
+      })
+
+      homeworkContainer.appendChild(error);
+  });
+
+load();
 
 filterInput.addEventListener('keyup', function() {
+    filterResult.innerHTML = filterInput.value ?
+        cities
+          .filter(item => isMatching(item.name, filterInput.value))
+          .map(item => `<div>${item.name}</div>`)
+          .join('')
+        : '';
 });
 
 export {

@@ -1,4 +1,3 @@
-let webpack = require('webpack');
 let HtmlPlugin = require('html-webpack-plugin');
 let CleanWebpackPlugin = require('clean-webpack-plugin');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -16,10 +15,10 @@ loaders.push({
 module.exports = {
     entry: {
         main: './src/index.js',
-        townss: './src/towns.js'
+        towns: './src/towns.js'
     },
     output: {
-        filename: '[hash].js',
+        filename: '[id][hash].js',
         path: path.resolve('dist')
     },
     devtool: 'source-map',
@@ -27,12 +26,6 @@ module.exports = {
         loaders
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
-            compress: {
-                drop_debugger: false
-            }
-        }),
         new ExtractTextPlugin('styles.css'),
         new HtmlPlugin({
             title: 'Main Homework',
