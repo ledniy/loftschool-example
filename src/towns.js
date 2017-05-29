@@ -51,7 +51,7 @@ const loadTowns = require('./index.js').loadAndSortTowns;
  * @return {boolean}
  */
 function isMatching(full, chunk) {
-    return full.toLowerCase().includes(chunk.toLowerCase());
+    return full.toLowerCase().indexOf(chunk.toLowerCase()) > -1;
 }
 
 let loadingBlock = homeworkContainer.querySelector('#loading-block');
@@ -59,6 +59,7 @@ let filterBlock = homeworkContainer.querySelector('#filter-block');
 let filterInput = homeworkContainer.querySelector('#filter-input');
 let filterResult = homeworkContainer.querySelector('#filter-result');
 let cities = [];
+
 const load = (url) => loadTowns(url)
   .then(res => {
       cities = res
@@ -69,7 +70,6 @@ const load = (url) => loadTowns(url)
       let error = document.createElement('div');
 
       loadingBlock.style.display = 'none';
-      error.setAttribute('id', 'error');
       error.innerHTML = `
         <div>Не удалось загрузить города</div>
         <button>Повторить</button>

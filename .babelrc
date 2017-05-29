@@ -1,6 +1,10 @@
 {
   "presets": [
-    "latest"
+    ["env", {
+      "targets": {
+        "firefox": 31
+      }
+    }]
   ],
   "plugins": [
     "transform-runtime"
