@@ -32,6 +32,7 @@
  * @example
  * homeworkContainer.appendChild(...);
  */
+import { createCookie, deleteCookie } from './index.js';
 let homeworkContainer = document.querySelector('#homework-container');
 let filterNameInput = homeworkContainer.querySelector('#filter-name-input');
 let addNameInput = homeworkContainer.querySelector('#add-name-input');
@@ -39,8 +40,40 @@ let addValueInput = homeworkContainer.querySelector('#add-value-input');
 let addButton = homeworkContainer.querySelector('#add-button');
 let listTable = homeworkContainer.querySelector('#list-table tbody');
 
+listTable.addEventListener('click', function(e) {
+    if (e.target.innerText == 'Удалить') {
+        const tr = e.target.closest('tr');
+        const name = tr.cells[0].innerText;
+
+        deleteCookie(name);
+        listTable.removeChild(tr);
+    }
+});
+
 filterNameInput.addEventListener('keyup', function() {
+    renderTable();
 });
 
 addButton.addEventListener('click', () => {
+    const name = addNameInput.value;
+    const value = addValueInput.value;
+
+    createCookie(name, value);
+    renderTable();
 });
+
+function renderTable() {
+    listTable.innerHTML = document.cookie.split('; ')
+        .map(item => ({
+            name: item.split('=')[0],
+            value: item.split('=')[1]
+        }))
+        .filter(item => item.name.includes(filterNameInput.value) || item.value.includes(filterNameInput.value))
+        .map(item =>
+           `<tr>
+              <td>${item.name}</td>
+              <td>${item.value}</td>
+              <td><button>Удалить</button></td>
+            </tr>`
+        ).join('');
+}
