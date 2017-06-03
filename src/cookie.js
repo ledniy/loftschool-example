@@ -43,9 +43,8 @@ let listTable = homeworkContainer.querySelector('#list-table tbody');
 listTable.addEventListener('click', function(e) {
     if (e.target.innerText == 'Удалить') {
         const tr = e.target.closest('tr');
-        const name = tr.cells[0].innerText;
 
-        deleteCookie(name);
+        deleteCookie(e.target.dataset.cookie);
         listTable.removeChild(tr);
     }
 });
@@ -73,7 +72,7 @@ function renderTable() {
            `<tr>
               <td>${item.name}</td>
               <td>${item.value}</td>
-              <td><button>Удалить</button></td>
+              <td><button data-cookie=${item.name}>Удалить</button></td>
             </tr>`
         ).join('');
 }
