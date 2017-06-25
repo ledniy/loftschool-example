@@ -1,0 +1,49 @@
+html, body {
+  height: 100%;
+}
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+.column {
+  width: 49%;
+}
+.list {
+  height: 500px;
+  overflow-y: scroll;
+}
+input {
+  width: 100%;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn {
+  font-weight: 800;
+  font-size: 50px;
+  cursor: pointer;
+  font-style: normal;
+}
+
+.photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+img {
+  -webkit-user-drag: none;
+}
+button {
+  position: absolute;
+  right: 10px;
+  width: 100px;
+  height: 40px;
+}
